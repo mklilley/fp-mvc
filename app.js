@@ -2,12 +2,12 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 
-const indexController = require("./controllers/index");
-const quotesController = require("./controllers/quotes");
+const indexRoute = require("./routes/index");
+const quotesRoute = require("./routes/quotes");
 
 app.use(cors());
 
-app.use("/", indexController);
-app.use("/quotes", quotesController);
+app.use("/", indexRoute);
+app.use("/quotes", quotesRoute);
 
 module.exports = app;
