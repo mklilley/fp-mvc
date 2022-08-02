@@ -2,7 +2,6 @@ const router = require("express").Router();
 
 const Quote = require("../models/Quote");
 
-// To do: Create a route for retrieving a random quote
 router.get("/random", (req, res) => {
     try {
         const quote = Quote.showRandom();
@@ -12,7 +11,6 @@ router.get("/random", (req, res) => {
     }
 });
 
-// To do: Create a route for retrieving all quotes
 router.get("/", (req, res) => {
     try {
         const quotes = Quote.showAll();
@@ -22,7 +20,6 @@ router.get("/", (req, res) => {
     }
 });
 
-// To do: Refine this route and add handling for out-of-range IDs
 router.get("/:id", (req, res) => {
     try {
         const quote = Quote.show(req.params.id);
