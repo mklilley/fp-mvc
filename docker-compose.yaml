@@ -8,7 +8,7 @@ services:
       - ./db/scripts:/docker-entrypoint-initdb.d:ro
       - dbdata:/var/lib/postgresql/data
     environment:
-      - POSTGRES_PASSWORD=password
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
   api:
     container_name: express-compose-api
     image: node:slim
@@ -20,7 +20,12 @@ services:
     ports: 
       - 3000:3000
     environment:
-      - PORT=3000
+      - PORT=${PORT}
+      - PGHOST=${PGHOST}
+      - PGUSER=${PGUSER}
+      - PGDATABASE=${PGDATABASE}
+      - PGPASSWORD=${PGPASSWORD}
+      - PGPORT=${PGPORT}
     command: bash -c "npm install && npm run dev"
 volumes:
   dbdata:
