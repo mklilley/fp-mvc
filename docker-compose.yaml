@@ -5,7 +5,7 @@ services:
     container_name: postgres
     image: postgres:latest
     volumes:
-      - .db/scripts:/docker-entrypoint-initdb.d:ro
+      - ./db/scripts:/docker-entrypoint-initdb.d:ro
       - dbdata:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=password
