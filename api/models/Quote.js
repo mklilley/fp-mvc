@@ -1,27 +1,40 @@
-const quotesData = require("../data/quotes");
+const { Pool } = require("pg");
+const pool = new Pool();
 
 class Quote {
     constructor(data) {
-        [this.quote, this.author] = data.split("-");
+        this.quote = data.quote;
+        this.author = data.author;
     }
 
-    static showAll() {
-        const quotes = quotesData.map((q) => new Quote(q));
+    static async showAll() {
+        const { rows } = await pool.query("SELECT * FROM quotes");
+        const quotes = rows.map((q) => new Quote(q));
         if (!quotes.length) {
             throw new Error("No quotes found");
         }
         return quotes;
     }
 
-    static showRandom() {
-        const randomId = Math.floor(Math.random() * quotesData.length);
-        return new Quote(quotesData[randomId]);
+    static async showRandom() {
+        const { rows } = await pool.query(
+            "SELECT * from quotes ORDER BY RANDOM() LIMIT 1"
+        );
+        if (rows[0]) {
+            return new Quote(rows[0]);
+        } else {
+            throw new Error("Oops, something went wrong on our side");
+        }
     }
 
-    static show(id) {
+    static async show(id) {
+        const { rows } = await pool.query(
+            "SELECT * FROM quotes WHERE id = $1",
+            [id]
+        );
         // Check that user input is in the range of allowed indexes for the quotes array
-        if (id >= 1 && id <= quotesData.length) {
-            return new Quote(quotesData[id - 1]);
+        if (rows[0]) {
+            return new Quote(rows[0]);
         } else {
             throw new Error("Quote not found");
         }
