@@ -1,0 +1,26 @@
+version: "3"
+name: "full-stack"
+services:
+  db:
+    container_name: postgres
+    image: postgres:latest
+    volumes:
+      - .db/scripts:/docker-entrypoint-initdb.d:ro
+      - dbdata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=password
+  api:
+    container_name: express-compose-api
+    image: node:slim
+    volumes:
+      - type: bind
+        source: ./api
+        target: /code
+    working_dir: /code
+    ports: 
+      - 3000:3000
+    environment:
+      - PORT=3000
+    command: bash -c "npm install && npm run dev"
+volumes:
+  dbdata:
