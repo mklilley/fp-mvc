@@ -15,7 +15,7 @@ class Quote {
 
     static showRandom() {
         const randomId = Math.floor(Math.random() * quotesData.length);
-        return new Quote(quotes[randomId]);
+        return new Quote(quotesData[randomId]);
     }
 
     static show(id) {
