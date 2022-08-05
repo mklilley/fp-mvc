@@ -13,9 +13,8 @@ services:
     container_name: express-compose-api
     image: node:slim
     volumes:
-      - type: bind
-        source: ./api
-        target: /code
+      - ./api:/code
+      - node_modules:/code/node_modules
     working_dir: /code
     ports: 
       - 3000:3000
@@ -30,3 +29,4 @@ services:
     command: bash -c "npm install && npm run dev"
 volumes:
   dbdata:
+  node_modules:
