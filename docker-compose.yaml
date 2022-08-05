@@ -25,6 +25,8 @@ services:
       - PGDATABASE=${PGDATABASE}
       - PGPASSWORD=${PGPASSWORD}
       - PGPORT=${PGPORT}
+    depends_on:
+      - db
     command: bash -c "npm install && npm run dev"
 volumes:
   dbdata:
